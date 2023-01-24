@@ -36,7 +36,7 @@ lum.setanalysis('maximum number of modes to store', 6)
 
 bend_radii = [0, .3, .2, .1, .075, .05, .045, .04, .035, .03, .025, .02, .015, .01, .005]
 # bend_radii = [.01]
-wavelengths_nm = [800, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980, 990, 1000, 1050]
+wavelengths_nm = [850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980, 990, 1000, 1010, 1020, 1030, 1040, 1050]
 
 #bend_radii = [0, .01, .005]
 #wavelengths_nm = [850, 900, 950, 1000]
@@ -91,13 +91,12 @@ for wavelength_nm in wavelengths_nm:
                 modes[i]['wavelength'] = wavelength_nm
                 modes[i]['bend_radius'] = bend_radius
                 modes[i]['n'] = n
-                modes[i]['loss'] = lum.getre
-                sult(f"::model::FDE::data::mode{i}", "loss")
+                modes[i]['loss'] = lum.getresult(f"::model::FDE::data::mode{i}", "loss")
                 modes[i]['neff'] = float(lum.getresult(f"::model::FDE::data::mode{i}", "neff").flatten()[0])
             except:
                 pass
 
-        print(modes)
+        # print(modes)
 
         with open(f"Lumerical_Results\\TAF_8.3-20-30_dispersion-{wavelength_nm}nm_bend-{bend_radius_mm}mm.json",
                   "w") as outfile:
