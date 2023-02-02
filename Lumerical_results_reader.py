@@ -5,6 +5,8 @@ import json
 import csv
 import os
 from collections import defaultdict
+import pathlib
+import re
 
 
 def read_json_files(directory):
@@ -27,23 +29,38 @@ def read_json_files(directory):
                 print(key, val)
                 loss_data[f'{wavelength_nm}nm-mode{key}'][bend] = val['loss']
 
-    print(loss_data)
-    print(list(list(loss_data.values())[0].keys()))
-    with open('bending_loss.csv', 'w', newline='') as csvfile:
-        fieldnames = [int(i) for i in list(loss_data.values())[0].keys()].sort()
 
-        fieldnames = ['name'] + fieldnames
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=",")
-
-        writer.writeheader()
-        for key, val in loss_data.items():
-            d = val
-            d['name'] = key
-            writer.writerow(d)
-            print(d)
 
 
 if __name__ == '__main__':
     dir = 'Lumerical_Results'
 
-    read_json_files(dir)
+    # read_json_files(dir)
+    # filename = pathlib.Path('Lumerical_Results/TAF_8.3-20-30_dispersion-870nm_bend-10.0mm.json')
+    # print(filename)
+
+    # for filename in os.listdir(dir):
+    #     filename = os.path.join(dir, filename)
+    #     print(filename)
+    #     with open(filename, 'r') as file:
+    #         data = json.load(file)
+    #     print(data)
+    #     data['wavelength'] = data['1']['wavelength']
+    #     data['bend_radius'] = data['1']['bend_radius']
+    #     for i in range(1,7):
+    #         del data[str(i)]['wavelength']
+    #         del data[str(i)]['bend_radius']
+    #     print(data)
+    #
+    #     with open(filename, 'w') as file:
+    #         json.dump(data, file)
+
+    for filename in os.listdir(dir):
+        filename = os.path.join(dir, filename)
+        if not filename.endswith('.json'):
+            continue
+        if filename.endswith('full-dataset.json') or filename.endswith('mode-overlaps.json'):
+            continue
+        base = re.match(r'(.*).json', filename)
+        print(filename, f'{base[1]}_summary.json')
+        os.rename(filename, f'{base[1]}_summary.json')
