@@ -21,114 +21,149 @@ class NumpyArrayEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 
-# class Lumerical_Mode:
-#     def __int__(self):
-#         self.lum = None
-#
-#         self.default_analysis_parameters = {
-#             'maximum number of modes to store': 6,
-#             'search': 'in range',
-#             'convergence tolerance': 1e-12
-#         }
-#
-#     def open(self, hidden=False):
-#         self.lum = lumapi.MODE(hide=hidden)
-#
-#     def load_model(self, model_path):
-#         self.lum.load(model_path)
-#
-#     def get_analysis_parameters(self, log=True):
-#         params = lum.getanalysis().split('\n')
-#         if log:
-#             for param in params:
-#                 try:
-#                     logging.debug(f'{param}: {lum.getanalysis(item)}')
-#                 except:
-#                     logging.info(f'{param}. **Unable to get values**')
-#
-#         return params
-#
-#     def set_analysis_parameter(self, parameter: str, value):
-#         logging.debug(f'Setting analysis parameter {parameter}: {value}')
-#         lum.setanalysis(parameter, value)
-#
-#     def set_default_analysis_parameters(self):
-#         for param, value in self.default_analysis_parameters.items():
-#             self.set_analysis_parameter(param, value)
-#
-#     def set_lumerical_named_parameter(self, name: str, parameter: str, value):
-#         self.lum.switchtolayout()
-#         logging.debug(f'Setting named parameter {name},{parameter}: {value}')
-#         lum.setnamed(name, parameter, value)
-#
-#     def find_modes(self):
-#         logging.debug(f'Finding Modes')
-#
-#     def get_mode_overlaps(self, save_to_file: bool = True, folder: Path = Path()):
-#         modes = {}
-#         modes['wavelength'] = wavelength_nm
-#         modes['bend_radius'] = bend_radius
-#
-#         modes['deltan_core'] = deltan_core
-#         modes['deltan_ring'] = deltan_ring
-#         modes['core_radius'] = core_radius
-#         modes['trench_ID'] = trench_ID
-#         modes['trench_OD'] = trench_OD
-#
-#         modes['mode_coupling'] = []
-#
-#         d = np.linspace(0, 10e-6, 101)
-#
-#         for i in range(1, 7):
-#             for j in range(1, 7):
-#                 for k, x in enumerate(d):
-#                     overlap = lum.overlap(
-#                         f"::model::FDE::data::mode{i}",
-#                         f"::model::FDE::data::mode{j}",
-#                         x,
-#                         0,
-#                         0
-#                     )[0, 0]
-#
-#                     modes['mode_coupling'].append([i, j, x, overlap])
-#
-#         if save_to_file:
-#             file_path = folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-overlaps.json')
-#             with open(file_path, "w") as outfile:
-#                 json.dump(modes, outfile, cls=NumpyArrayEncoder)
-#
-#         return modes
-#
-#     def get_mode_summary(self, save_to_file: bool = True, folder: Path = Path()):
-#         modes = {}
-#         modes['wavelength'] = wavelength_nm
-#         modes['bend_radius'] = bend_radius
-#
-#         modes['deltan_core'] = deltan_core
-#         modes['deltan_ring'] = deltan_ring
-#         modes['core_radius'] = core_radius
-#         modes['trench_ID'] = trench_ID
-#         modes['trench_OD'] = trench_OD
-#
-#         for i in range(1, 7):
-#             try:
-#                 modes[str(i)] = {}
-#                 modes[str(i)]['n'] = n
-#                 modes[str(i)]['loss'] = lum.getresult(f"::model::FDE::data::mode{i}", "loss")
-#                 modes[str(i)]['neff'] = float(lum.getresult(f"::model::FDE::data::mode{i}", "neff").flatten()[0])
-#                 modes[str(i)]['mode_effective_area'] = lum.getresult(f"::model::FDE::data::mode{i}",
-#                                                                      "mode effective area")
-#                 modes[str(i)]['TE_polarization_fraction'] = lum.getresult(f"::model::FDE::data::mode{i}",
-#                                                                           "TE polarization fraction")
-#             except:
-#                 pass
-#
-#         if save_to_file:
-#             file_path = results_folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-summary.json')
-#             with open(file_path, "w") as outfile:
-#                 json.dump(modes, outfile, cls=NumpyArrayEncoder)
-#
-#         return modes
+class Lumerical_Mode:
+    def __int__(self, named_parameters=None):
+        self.lum = None
+
+        self.default_analysis_parameters = {
+            'maximum number of modes to store': 6,
+            'search': 'in range',
+            'convergence tolerance': 1e-12
+        }
+
+        if named_parameters is None:
+            self.named_parameters = {
+                "core": {
+                    "radius": core_radius,
+                    'index': n + deltan_core
+                },
+                "ring": {
+                    "inner radius": trench_ID,
+                    "outer radius": trench_OD,
+                    'index': n - deltan_ring
+                },
+                'clad': {
+                    'index', n
+                }
+            }
+
+        self.wavelength = None
+        self.bend_radius = None
+
+    def open(self, hidden=False):
+        self.lum = lumapi.MODE(hide=hidden)
+
+    def load_model(self, model_path):
+        self.lum.load(model_path)
+
+    def set_bending_radius(self, bending_radius:float=0):
+        logging.debug(f'Setting Bending Radius to {bending_radius}')
+        self.bend_radius = bending_radius
+        if bending_radius == 0:
+            self.set_analysis_parameter('bent waveguide', 0)
+        else:
+            set_lumerical_analysis_parameter('bent waveguide', 1)
+            set_lumerical_analysis_parameter('bend radius', self.bend_radius)
+
+
+    def set_wavelength(self, wavelength, update_refractive_indices: bool = True):
+        logging.debug(f'Setting Wavelength to {wavelength}')
+        self.wavelength = wavelength
+        self.set_analysis_parameter('wavelength', self.wavelength)
+
+
+
+    def get_analysis_parameters(self, log=True):
+        params = lum.getanalysis().split('\n')
+        if log:
+            for param in params:
+                try:
+                    logging.debug(f'{param}: {lum.getanalysis(item)}')
+                except:
+                    logging.info(f'{param}. **Unable to get values**')
+
+        return params
+
+    def set_analysis_parameter(self, parameter: str, value):
+        logging.debug(f'Setting analysis parameter {parameter}: {value}')
+        lum.setanalysis(parameter, value)
+
+    def set_default_analysis_parameters(self):
+        for param, value in self.default_analysis_parameters.items():
+            self.set_analysis_parameter(param, value)
+
+    def set_named_parameters(self):
+        for name, params in self.named_parameters.items():
+            for param, value in params.items():
+                self.set_named_parameter(name, param, value)
+
+    def set_named_parameter(self, name: str, parameter: str, value):
+        self.lum.switchtolayout()
+        logging.debug(f'Setting named parameter {name},{parameter}: {value}')
+        lum.setnamed(name, parameter, value)
+
+    def find_modes(self):
+        logging.debug(f'Finding Modes')
+
+    def get_mode_overlaps(self, save_to_file: bool = True, folder: Path = Path(), overlap_max=5e-6, overlap_points=51):
+        logging.debug(f'Computing Mode Overlaps')
+
+        modes = {}
+        modes['wavelength'] = self.wavelength_nm
+        modes['bend_radius'] = self.bend_radius
+
+        modes['parameters'] = self.named_parameters
+
+        modes['mode_coupling'] = []
+
+        d = np.linspace(0, overlap_max, overlap_points)
+
+        for i in range(1, 7):
+            for j in range(1, 7):
+                for k, x in enumerate(d):
+                    overlap = lum.overlap(
+                        f"::model::FDE::data::mode{i}",
+                        f"::model::FDE::data::mode{j}",
+                        x,
+                        0,
+                        0
+                    )[0, 0]
+
+                    modes['mode_coupling'].append([i, j, x, overlap])
+
+        if save_to_file:
+            file_path = folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-overlaps.json')
+            with open(file_path, "w") as outfile:
+                json.dump(modes, outfile, cls=NumpyArrayEncoder)
+
+        return modes
+
+    def get_mode_summary(self, save_to_file: bool = True, folder: Path = Path()):
+        modes = {}
+        modes['wavelength'] = self.wavelength_nm
+        modes['bend_radius'] = self.bend_radius
+
+        modes['parameters'] = self.named_parameters
+
+        for i in range(1, 7):
+            try:
+                modes[str(i)] = {}
+                modes[str(i)]['n'] = n
+                modes[str(i)]['loss'] = lum.getresult(f"::model::FDE::data::mode{i}", "loss")
+                modes[str(i)]['neff'] = float(lum.getresult(f"::model::FDE::data::mode{i}", "neff").flatten()[0])
+                modes[str(i)]['mode_effective_area'] = lum.getresult(f"::model::FDE::data::mode{i}",
+                                                                     "mode effective area")
+                modes[str(i)]['TE_polarization_fraction'] = lum.getresult(f"::model::FDE::data::mode{i}",
+                                                                          "TE polarization fraction")
+            except:
+                pass
+
+        if save_to_file:
+            file_path = results_folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-summary.json')
+            with open(file_path, "w") as outfile:
+                json.dump(modes, outfile, cls=NumpyArrayEncoder)
+
+        return modes
 
 
 def set_lumerical_analysis_parameter(parameter: str, value):
@@ -195,7 +230,8 @@ if __name__ == '__main__':
     bend_radii = [0, .3, .2, .1, .075, .05, .045, .04, .035, .03, .025, .02, .015, .01, .005]
     # bend_radii = [0]
 
-    wavelengths_nm = [800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980, 990, 1000, 1010, 1020, 1030, 1040, 1050]
+    wavelengths_nm = [800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980,
+                      990, 1000, 1010, 1020, 1030, 1040, 1050]
     # wavelengths_nm = [800]
 
     for wavelength_nm in wavelengths_nm:
@@ -220,7 +256,6 @@ if __name__ == '__main__':
         set_lumerical_named_parameter('ring', 'index', n - deltan_ring)
 
         logging.debug(f'Set n to {n}, for wavelength {wavelength_nm}nm')
-
 
         for bend_radius in bend_radii:
 
@@ -259,7 +294,6 @@ if __name__ == '__main__':
                 modes['mode_coupling'] = []
 
                 d = np.linspace(0, 10e-6, 101)
-
 
                 for i in range(1, 7):
                     for j in range(1, 7):
