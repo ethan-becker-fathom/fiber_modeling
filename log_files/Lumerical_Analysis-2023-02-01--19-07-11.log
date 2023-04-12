@@ -1,0 +1,125 @@
+2023-02-01 19:07:13,969 - root - DEBUG - Lumerical_Analysis.py - <module> - frequency: 299792458000000.0
+2023-02-01 19:07:14,048 - root - DEBUG - Lumerical_Analysis.py - <module> - wavelength: 1e-06
+2023-02-01 19:07:14,126 - root - DEBUG - Lumerical_Analysis.py - <module> - number of trial modes: 6.0
+2023-02-01 19:07:14,204 - root - DEBUG - Lumerical_Analysis.py - <module> - center the spectrum: 1.0
+2023-02-01 19:07:14,282 - root - DEBUG - Lumerical_Analysis.py - <module> - n: [[1.452+0.j]]
+2023-02-01 19:07:14,361 - root - DEBUG - Lumerical_Analysis.py - <module> - solver algorithm: let solver choose
+2023-02-01 19:07:14,439 - root - DEBUG - Lumerical_Analysis.py - <module> - convergence tolerance: 1e-09
+2023-02-01 19:07:14,517 - root - DEBUG - Lumerical_Analysis.py - <module> - integrate: 2.0
+2023-02-01 19:07:14,596 - root - DEBUG - Lumerical_Analysis.py - <module> - normalize to: 1.0
+2023-02-01 19:07:14,675 - root - DEBUG - Lumerical_Analysis.py - <module> - x1: 0.0
+2023-02-01 19:07:14,753 - root - DEBUG - Lumerical_Analysis.py - <module> - x2: 0.0
+2023-02-01 19:07:14,831 - root - DEBUG - Lumerical_Analysis.py - <module> - y1: 0.0
+2023-02-01 19:07:14,909 - root - DEBUG - Lumerical_Analysis.py - <module> - y2: 0.0
+2023-02-01 19:07:14,987 - root - DEBUG - Lumerical_Analysis.py - <module> - z1: 0.0
+2023-02-01 19:07:15,066 - root - DEBUG - Lumerical_Analysis.py - <module> - z2: 0.0
+2023-02-01 19:07:15,144 - root - DEBUG - Lumerical_Analysis.py - <module> - fraction integrated: 0.0
+2023-02-01 19:07:15,220 - root - DEBUG - Lumerical_Analysis.py - <module> - characteristic impedance: [[0.+0.j]]
+2023-02-01 19:07:15,299 - root - DEBUG - Lumerical_Analysis.py - <module> - calculate impedance: 1.0
+2023-02-01 19:07:15,378 - root - DEBUG - Lumerical_Analysis.py - <module> - material index: 1.4
+2023-02-01 19:07:15,458 - root - DEBUG - Lumerical_Analysis.py - <module> - projection distance: 0.1830547945205478
+2023-02-01 19:07:15,537 - root - DEBUG - Lumerical_Analysis.py - <module> - points in x: 50.0
+2023-02-01 19:07:15,615 - root - DEBUG - Lumerical_Analysis.py - <module> - points in y: 50.0
+2023-02-01 19:07:15,694 - root - DEBUG - Lumerical_Analysis.py - <module> - farfield x span: 0.0009099999999999996
+2023-02-01 19:07:15,774 - root - DEBUG - Lumerical_Analysis.py - <module> - farfield y span: 0.0009205479452054784
+2023-02-01 19:07:15,854 - root - DEBUG - Lumerical_Analysis.py - <module> - farfield x: 0.0
+2023-02-01 19:07:15,935 - root - DEBUG - Lumerical_Analysis.py - <module> - farfield y: -3.7269449679189215e-20
+2023-02-01 19:07:16,011 - root - DEBUG - Lumerical_Analysis.py - <module> - text file (column format): 1.0
+2023-02-01 19:07:16,090 - root - DEBUG - Lumerical_Analysis.py - <module> - text file (standard format): 0.0
+2023-02-01 19:07:16,170 - root - DEBUG - Lumerical_Analysis.py - <module> - matlab: 0.0
+2023-02-01 19:07:16,247 - root - DEBUG - Lumerical_Analysis.py - <module> - ldf file: 0.0
+2023-02-01 19:07:16,326 - root - DEBUG - Lumerical_Analysis.py - <module> - effective index data: 1.0
+2023-02-01 19:07:16,403 - root - DEBUG - Lumerical_Analysis.py - <module> - material properties: 1.0
+2023-02-01 19:07:16,483 - root - DEBUG - Lumerical_Analysis.py - <module> - selected modes: 1.0
+2023-02-01 19:07:16,561 - root - INFO - Lumerical_Analysis.py - <module> - selected modes, far field approximate. **Unable to get values**
+2023-02-01 19:07:16,639 - root - DEBUG - Lumerical_Analysis.py - <module> - selected modes, far field exact: 0.0
+2023-02-01 19:07:16,717 - root - DEBUG - Lumerical_Analysis.py - <module> - start frequency: 299792458000000.0
+2023-02-01 19:07:16,798 - root - DEBUG - Lumerical_Analysis.py - <module> - stop frequency: 285516626666666.7
+2023-02-01 19:07:16,876 - root - DEBUG - Lumerical_Analysis.py - <module> - start wavelength: 1.05e-06
+2023-02-01 19:07:16,955 - root - DEBUG - Lumerical_Analysis.py - <module> - stop wavelength: 1e-06
+2023-02-01 19:07:17,034 - root - DEBUG - Lumerical_Analysis.py - <module> - number of points: 10.0
+2023-02-01 19:07:17,113 - root - DEBUG - Lumerical_Analysis.py - <module> - number of test modes: 6.0
+2023-02-01 19:07:17,192 - root - DEBUG - Lumerical_Analysis.py - <module> - effective index: 1.449868446360139
+2023-02-01 19:07:17,270 - root - DEBUG - Lumerical_Analysis.py - <module> - use single precision: 0.0
+2023-02-01 19:07:17,348 - root - DEBUG - Lumerical_Analysis.py - <module> - bent waveguide: 0.0
+2023-02-01 19:07:17,425 - root - DEBUG - Lumerical_Analysis.py - <module> - bend radius: 0.005
+2023-02-01 19:07:17,505 - root - DEBUG - Lumerical_Analysis.py - <module> - bend orientation: 0.0
+2023-02-01 19:07:17,582 - root - DEBUG - Lumerical_Analysis.py - <module> - bend location: 0.0
+2023-02-01 19:07:17,661 - root - DEBUG - Lumerical_Analysis.py - <module> - bend location x: 0.0
+2023-02-01 19:07:17,739 - root - DEBUG - Lumerical_Analysis.py - <module> - bend location y: 0.0
+2023-02-01 19:07:17,819 - root - DEBUG - Lumerical_Analysis.py - <module> - bend location z: 0.0
+2023-02-01 19:07:17,897 - root - DEBUG - Lumerical_Analysis.py - <module> - helical waveguide: 0.0
+2023-02-01 19:07:17,976 - root - DEBUG - Lumerical_Analysis.py - <module> - helix period: 0.1
+2023-02-01 19:07:18,054 - root - DEBUG - Lumerical_Analysis.py - <module> - helix center x: 0.0
+2023-02-01 19:07:18,131 - root - DEBUG - Lumerical_Analysis.py - <module> - helix center y: 0.0
+2023-02-01 19:07:18,206 - root - DEBUG - Lumerical_Analysis.py - <module> - helix center z: 0.0
+2023-02-01 19:07:18,286 - root - DEBUG - Lumerical_Analysis.py - <module> - detailed dispersion calculation: 1.0
+2023-02-01 19:07:18,365 - root - DEBUG - Lumerical_Analysis.py - <module> - fractional wavelength offset for detailed dispersion calculation: 0.0001
+2023-02-01 19:07:18,443 - root - DEBUG - Lumerical_Analysis.py - <module> - store mode profiles while tracking: 1.0
+2023-02-01 19:07:18,521 - root - DEBUG - Lumerical_Analysis.py - <module> - track selected mode: 1.0
+2023-02-01 19:07:18,600 - root - DEBUG - Lumerical_Analysis.py - <module> - automatically remove pml modes: 1.0
+2023-02-01 19:07:18,681 - root - DEBUG - Lumerical_Analysis.py - <module> - threshold for pml mode removal: 0.01
+2023-02-01 19:07:18,758 - root - DEBUG - Lumerical_Analysis.py - <module> - n1: 1.452
+2023-02-01 19:07:18,836 - root - DEBUG - Lumerical_Analysis.py - <module> - n2: 1.4485000000000001
+2023-02-01 19:07:18,916 - root - DEBUG - Lumerical_Analysis.py - <module> - maximum number of modes to store: 6.0
+2023-02-01 19:07:18,995 - root - DEBUG - Lumerical_Analysis.py - <module> - selected modes, far field angular: 0.0
+2023-02-01 19:07:19,073 - root - DEBUG - Lumerical_Analysis.py - <module> - integration shape: 1.0
+2023-02-01 19:07:19,152 - root - DEBUG - Lumerical_Analysis.py - <module> - center x: 0.0
+2023-02-01 19:07:19,230 - root - DEBUG - Lumerical_Analysis.py - <module> - center y: 0.0
+2023-02-01 19:07:19,310 - root - DEBUG - Lumerical_Analysis.py - <module> - center z: 0.0
+2023-02-01 19:07:19,388 - root - DEBUG - Lumerical_Analysis.py - <module> - radius: 0.0
+2023-02-01 19:07:19,465 - root - DEBUG - Lumerical_Analysis.py - <module> - solid: 
+2023-02-01 19:07:19,543 - root - DEBUG - Lumerical_Analysis.py - <module> - angle: 0.0
+2023-02-01 19:07:19,621 - root - DEBUG - Lumerical_Analysis.py - <module> - search: near n
+2023-02-01 19:07:19,700 - root - DEBUG - Lumerical_Analysis.py - <module> - projection method: 1.0
+2023-02-01 19:07:19,776 - root - DEBUG - Lumerical_Analysis.py - <module> - shift d-card center: 0.0
+2023-02-01 19:07:19,854 - root - DEBUG - Lumerical_Analysis.py - <module> - x shift: 0.0
+2023-02-01 19:07:19,934 - root - DEBUG - Lumerical_Analysis.py - <module> - y shift: 0.0
+2023-02-01 19:07:20,012 - root - DEBUG - Lumerical_Analysis.py - <module> - z shift: 0.0
+2023-02-01 19:07:20,092 - root - DEBUG - Lumerical_Analysis.py - <module> - use max index: 1.0
+2023-02-01 19:07:20,172 - root - DEBUG - Lumerical_Analysis.py - <module> - use fully vectorial thin lens beam profile: 0.0
+2023-02-01 19:07:20,250 - root - DEBUG - Lumerical_Analysis.py - <module> - beam direction: 3.0
+2023-02-01 19:07:20,328 - root - DEBUG - Lumerical_Analysis.py - <module> - NA: 0.6
+2023-02-01 19:07:20,406 - root - DEBUG - Lumerical_Analysis.py - <module> - fill lens: 1.0
+2023-02-01 19:07:20,486 - root - DEBUG - Lumerical_Analysis.py - <module> - lens diameter: 0.005
+2023-02-01 19:07:20,564 - root - DEBUG - Lumerical_Analysis.py - <module> - beam diameter: 0.001
+2023-02-01 19:07:20,642 - root - DEBUG - Lumerical_Analysis.py - <module> - number of plane waves: 200.0
+2023-02-01 19:07:20,721 - root - DEBUG - Lumerical_Analysis.py - <module> - define gaussian beam by: 1.0
+2023-02-01 19:07:20,801 - root - DEBUG - Lumerical_Analysis.py - <module> - waist radius: 1e-05
+2023-02-01 19:07:20,878 - root - DEBUG - Lumerical_Analysis.py - <module> - distance from waist: 0.0
+2023-02-01 19:07:20,955 - root - DEBUG - Lumerical_Analysis.py - <module> - beam radius: 0.09999999999999999
+2023-02-01 19:07:21,034 - root - DEBUG - Lumerical_Analysis.py - <module> - divergence angle: 2.83063
+2023-02-01 19:07:21,111 - root - DEBUG - Lumerical_Analysis.py - <module> - refractive index: 1.0
+2023-02-01 19:07:21,190 - root - DEBUG - Lumerical_Analysis.py - <module> - theta: 0.0
+2023-02-01 19:07:21,267 - root - DEBUG - Lumerical_Analysis.py - <module> - phi: 0.0
+2023-02-01 19:07:21,345 - root - DEBUG - Lumerical_Analysis.py - <module> - polarization angle: 0.0
+2023-02-01 19:07:21,424 - root - DEBUG - Lumerical_Analysis.py - <module> - sample span: 1e-05
+2023-02-01 19:07:21,501 - root - DEBUG - Lumerical_Analysis.py - <module> - sample resolution: 200.0
+2023-02-01 19:07:21,578 - root - DEBUG - Lumerical_Analysis.py - <module> - track current mode: 0.0
+2023-02-01 19:07:21,657 - root - DEBUG - Lumerical_Analysis.py - <module> - correct backward propagating modes: 1.0
+2023-02-01 19:07:21,735 - root - DEBUG - Lumerical_Analysis.py - <module> - correct backward propagating modes when pml is present: 0.0
+2023-02-01 19:07:21,812 - root - DEBUG - Lumerical_Analysis.py - <module> - maximum tolerated gain: 1e-12
+2023-02-01 19:07:21,891 - root - DEBUG - Lumerical_Analysis.py - <module> - add material gain to maximum tolerated gain: 1.0
+2023-02-01 19:07:21,970 - root - DEBUG - Lumerical_Analysis.py - <module> - override default boundaries: 0.0
+2023-02-01 19:07:22,047 - root - DEBUG - Lumerical_Analysis.py - <module> - x min bc: Metal
+2023-02-01 19:07:22,125 - root - DEBUG - Lumerical_Analysis.py - <module> - x max bc: Metal
+2023-02-01 19:07:22,203 - root - DEBUG - Lumerical_Analysis.py - <module> - y min bc: Metal
+2023-02-01 19:07:22,281 - root - DEBUG - Lumerical_Analysis.py - <module> - y max bc: Metal
+2023-02-01 19:07:22,361 - root - DEBUG - Lumerical_Analysis.py - <module> - z min bc: Metal
+2023-02-01 19:07:22,437 - root - DEBUG - Lumerical_Analysis.py - <module> - z max bc: Metal
+2023-02-01 19:07:22,516 - root - DEBUG - Lumerical_Analysis.py - <module> - calculate group index: 1.0
+2023-02-01 19:07:22,620 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter core,radius: 4.15e-06
+2023-02-01 19:07:22,687 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter ring,inner radius: 9.96e-06
+2023-02-01 19:07:22,765 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter ring,outer radius: 1.4940000000000001e-05
+2023-02-01 19:07:22,844 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter maximum number of modes to store: 6
+2023-02-01 19:07:22,921 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter search: in range
+2023-02-01 19:07:23,000 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter convergence tolerance: 1e-12
+2023-02-01 19:07:23,161 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter clad,index: 1.4533172548587419
+2023-02-01 19:07:23,235 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter core,index: 1.4553172548587419
+2023-02-01 19:07:23,312 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_named_parameter - Setting named parameter ring,index: 1.448317254858742
+2023-02-01 19:07:23,389 - root - DEBUG - Lumerical_Analysis.py - <module> - Set n to 1.4533172548587419, for wavelength 800nm
+2023-02-01 19:07:23,389 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter wavelength: 8e-07
+2023-02-01 19:07:23,469 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter n1: 1.4553172548587419
+2023-02-01 19:07:23,547 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter n2: 1.4513172548587419
+2023-02-01 19:07:23,627 - root - DEBUG - Lumerical_Analysis.py - set_lumerical_analysis_parameter - Setting analysis parameter bent waveguide: 0
+2023-02-01 19:07:23,705 - root - INFO - Lumerical_Analysis.py - <module> - Finding Modes for wavelength:800nm, and bending radius: 0.0mm

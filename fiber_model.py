@@ -75,8 +75,5 @@ def coupling_loss_lateral_offset_fiber(mfd_1_um, mfd_2_um, offset_um):
 
 if __name__ == '__main__':
 
-    mfd = 10.4
+    print(fiber_MFD(.076, 8.3e-6))
 
-    for offset in np.arange(0, 2, 0.01):
-        loss = coupling_loss_lateral_offset_fiber(mfd, mfd, offset)
-        print(f"{offset:.2f}, {loss:.3f}, {power_to_db(loss):.3f}")

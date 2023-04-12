@@ -1,0 +1,29 @@
+2023-02-03 15:07:57,962 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter maximum number of modes to store: 6
+2023-02-03 15:07:58,046 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter search: in range
+2023-02-03 15:07:58,117 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter convergence tolerance: 1e-12
+2023-02-03 15:07:58,282 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,radius: 4.15e-06
+2023-02-03 15:07:58,451 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,index: 1.452
+2023-02-03 15:07:58,615 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,inner radius: 9.96e-06
+2023-02-03 15:07:58,785 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,outer radius: 1.4940000000000001e-05
+2023-02-03 15:07:58,946 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,index: 1.445
+2023-02-03 15:07:59,113 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter clad,index: 1.45
+2023-02-03 15:07:59,187 - root - DEBUG - Lumerical_Analysis.py - set_bending_radius - Setting Bending Radius to 0
+2023-02-03 15:07:59,187 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter bent waveguide: 0
+2023-02-03 15:07:59,267 - root - DEBUG - Lumerical_Analysis.py - set_wavelength - Setting Wavelength to 800_nm
+2023-02-03 15:07:59,267 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter wavelength: 8e-07
+2023-02-03 15:07:59,449 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,radius: 4.15e-06
+2023-02-03 15:07:59,614 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,index: 1.455317254858742
+2023-02-03 15:07:59,781 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,inner radius: 9.96e-06
+2023-02-03 15:07:59,946 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,outer radius: 1.4940000000000001e-05
+2023-02-03 15:08:00,113 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,index: 1.4483172548587422
+2023-02-03 15:08:00,282 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter clad,index: 1.453317254858742
+2023-02-03 15:08:00,449 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,radius: 4.15e-06
+2023-02-03 15:08:00,613 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,index: 1.455317254858742
+2023-02-03 15:08:00,781 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,inner radius: 9.96e-06
+2023-02-03 15:08:00,948 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,outer radius: 1.4940000000000001e-05
+2023-02-03 15:08:01,114 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter ring,index: 1.4483172548587422
+2023-02-03 15:08:01,281 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter clad,index: 1.453317254858742
+2023-02-03 15:08:01,355 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter n1: 1.455317254858742
+2023-02-03 15:08:01,431 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter n2: 1.451317254858742
+2023-02-03 15:08:02,673 - root - DEBUG - Lumerical_Analysis.py - find_modes - Finding Modes
+2023-02-03 15:08:21,227 - root - DEBUG - Lumerical_Analysis.py - get_mode_summary - Getting Mode Summary

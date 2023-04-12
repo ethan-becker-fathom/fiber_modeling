@@ -1,0 +1,123 @@
+2023-02-01 17:39:29,643 - root - DEBUG - Lumerical_dispersion.py - <module> - frequency: 299792458000000.0
+2023-02-01 17:39:29,720 - root - DEBUG - Lumerical_dispersion.py - <module> - wavelength: 1e-06
+2023-02-01 17:39:29,798 - root - DEBUG - Lumerical_dispersion.py - <module> - number of trial modes: 6.0
+2023-02-01 17:39:29,876 - root - DEBUG - Lumerical_dispersion.py - <module> - center the spectrum: 1.0
+2023-02-01 17:39:29,955 - root - DEBUG - Lumerical_dispersion.py - <module> - n: [[1.452+0.j]]
+2023-02-01 17:39:30,033 - root - DEBUG - Lumerical_dispersion.py - <module> - solver algorithm: let solver choose
+2023-02-01 17:39:30,112 - root - DEBUG - Lumerical_dispersion.py - <module> - convergence tolerance: 1e-09
+2023-02-01 17:39:30,190 - root - DEBUG - Lumerical_dispersion.py - <module> - integrate: 2.0
+2023-02-01 17:39:30,270 - root - DEBUG - Lumerical_dispersion.py - <module> - normalize to: 1.0
+2023-02-01 17:39:30,347 - root - DEBUG - Lumerical_dispersion.py - <module> - x1: 0.0
+2023-02-01 17:39:30,427 - root - DEBUG - Lumerical_dispersion.py - <module> - x2: 0.0
+2023-02-01 17:39:30,504 - root - DEBUG - Lumerical_dispersion.py - <module> - y1: 0.0
+2023-02-01 17:39:30,580 - root - DEBUG - Lumerical_dispersion.py - <module> - y2: 0.0
+2023-02-01 17:39:30,658 - root - DEBUG - Lumerical_dispersion.py - <module> - z1: 0.0
+2023-02-01 17:39:30,737 - root - DEBUG - Lumerical_dispersion.py - <module> - z2: 0.0
+2023-02-01 17:39:30,815 - root - DEBUG - Lumerical_dispersion.py - <module> - fraction integrated: 0.0
+2023-02-01 17:39:30,892 - root - DEBUG - Lumerical_dispersion.py - <module> - characteristic impedance: [[0.+0.j]]
+2023-02-01 17:39:30,971 - root - DEBUG - Lumerical_dispersion.py - <module> - calculate impedance: 1.0
+2023-02-01 17:39:31,048 - root - DEBUG - Lumerical_dispersion.py - <module> - material index: 1.4
+2023-02-01 17:39:31,127 - root - DEBUG - Lumerical_dispersion.py - <module> - projection distance: 0.1830547945205478
+2023-02-01 17:39:31,205 - root - DEBUG - Lumerical_dispersion.py - <module> - points in x: 50.0
+2023-02-01 17:39:31,283 - root - DEBUG - Lumerical_dispersion.py - <module> - points in y: 50.0
+2023-02-01 17:39:31,364 - root - DEBUG - Lumerical_dispersion.py - <module> - farfield x span: 0.0009099999999999996
+2023-02-01 17:39:31,440 - root - DEBUG - Lumerical_dispersion.py - <module> - farfield y span: 0.0009205479452054784
+2023-02-01 17:39:31,520 - root - DEBUG - Lumerical_dispersion.py - <module> - farfield x: 0.0
+2023-02-01 17:39:31,598 - root - DEBUG - Lumerical_dispersion.py - <module> - farfield y: -3.7269449679189215e-20
+2023-02-01 17:39:31,677 - root - DEBUG - Lumerical_dispersion.py - <module> - text file (column format): 1.0
+2023-02-01 17:39:31,756 - root - DEBUG - Lumerical_dispersion.py - <module> - text file (standard format): 0.0
+2023-02-01 17:39:31,834 - root - DEBUG - Lumerical_dispersion.py - <module> - matlab: 0.0
+2023-02-01 17:39:31,910 - root - DEBUG - Lumerical_dispersion.py - <module> - ldf file: 0.0
+2023-02-01 17:39:31,990 - root - DEBUG - Lumerical_dispersion.py - <module> - effective index data: 1.0
+2023-02-01 17:39:32,068 - root - DEBUG - Lumerical_dispersion.py - <module> - material properties: 1.0
+2023-02-01 17:39:32,145 - root - DEBUG - Lumerical_dispersion.py - <module> - selected modes: 1.0
+2023-02-01 17:39:32,224 - root - INFO - Lumerical_dispersion.py - <module> - selected modes, far field approximate. **Unable to get values**
+2023-02-01 17:39:32,302 - root - DEBUG - Lumerical_dispersion.py - <module> - selected modes, far field exact: 0.0
+2023-02-01 17:39:32,381 - root - DEBUG - Lumerical_dispersion.py - <module> - start frequency: 299792458000000.0
+2023-02-01 17:39:32,459 - root - DEBUG - Lumerical_dispersion.py - <module> - stop frequency: 285516626666666.7
+2023-02-01 17:39:32,538 - root - DEBUG - Lumerical_dispersion.py - <module> - start wavelength: 1.05e-06
+2023-02-01 17:39:32,615 - root - DEBUG - Lumerical_dispersion.py - <module> - stop wavelength: 1e-06
+2023-02-01 17:39:32,694 - root - DEBUG - Lumerical_dispersion.py - <module> - number of points: 10.0
+2023-02-01 17:39:32,772 - root - DEBUG - Lumerical_dispersion.py - <module> - number of test modes: 6.0
+2023-02-01 17:39:32,851 - root - DEBUG - Lumerical_dispersion.py - <module> - effective index: 1.449868446360139
+2023-02-01 17:39:32,930 - root - DEBUG - Lumerical_dispersion.py - <module> - use single precision: 0.0
+2023-02-01 17:39:33,010 - root - DEBUG - Lumerical_dispersion.py - <module> - bent waveguide: 0.0
+2023-02-01 17:39:33,088 - root - DEBUG - Lumerical_dispersion.py - <module> - bend radius: 0.005
+2023-02-01 17:39:33,167 - root - DEBUG - Lumerical_dispersion.py - <module> - bend orientation: 0.0
+2023-02-01 17:39:33,246 - root - DEBUG - Lumerical_dispersion.py - <module> - bend location: 0.0
+2023-02-01 17:39:33,322 - root - DEBUG - Lumerical_dispersion.py - <module> - bend location x: 0.0
+2023-02-01 17:39:33,400 - root - DEBUG - Lumerical_dispersion.py - <module> - bend location y: 0.0
+2023-02-01 17:39:33,476 - root - DEBUG - Lumerical_dispersion.py - <module> - bend location z: 0.0
+2023-02-01 17:39:33,554 - root - DEBUG - Lumerical_dispersion.py - <module> - helical waveguide: 0.0
+2023-02-01 17:39:33,633 - root - DEBUG - Lumerical_dispersion.py - <module> - helix period: 0.1
+2023-02-01 17:39:33,708 - root - DEBUG - Lumerical_dispersion.py - <module> - helix center x: 0.0
+2023-02-01 17:39:33,786 - root - DEBUG - Lumerical_dispersion.py - <module> - helix center y: 0.0
+2023-02-01 17:39:33,865 - root - DEBUG - Lumerical_dispersion.py - <module> - helix center z: 0.0
+2023-02-01 17:39:33,940 - root - DEBUG - Lumerical_dispersion.py - <module> - detailed dispersion calculation: 1.0
+2023-02-01 17:39:34,020 - root - DEBUG - Lumerical_dispersion.py - <module> - fractional wavelength offset for detailed dispersion calculation: 0.0001
+2023-02-01 17:39:34,099 - root - DEBUG - Lumerical_dispersion.py - <module> - store mode profiles while tracking: 1.0
+2023-02-01 17:39:34,175 - root - DEBUG - Lumerical_dispersion.py - <module> - track selected mode: 1.0
+2023-02-01 17:39:34,255 - root - DEBUG - Lumerical_dispersion.py - <module> - automatically remove pml modes: 1.0
+2023-02-01 17:39:34,334 - root - DEBUG - Lumerical_dispersion.py - <module> - threshold for pml mode removal: 0.01
+2023-02-01 17:39:34,411 - root - DEBUG - Lumerical_dispersion.py - <module> - n1: 1.452
+2023-02-01 17:39:34,486 - root - DEBUG - Lumerical_dispersion.py - <module> - n2: 1.4485000000000001
+2023-02-01 17:39:34,565 - root - DEBUG - Lumerical_dispersion.py - <module> - maximum number of modes to store: 6.0
+2023-02-01 17:39:34,642 - root - DEBUG - Lumerical_dispersion.py - <module> - selected modes, far field angular: 0.0
+2023-02-01 17:39:34,721 - root - DEBUG - Lumerical_dispersion.py - <module> - integration shape: 1.0
+2023-02-01 17:39:34,799 - root - DEBUG - Lumerical_dispersion.py - <module> - center x: 0.0
+2023-02-01 17:39:34,876 - root - DEBUG - Lumerical_dispersion.py - <module> - center y: 0.0
+2023-02-01 17:39:34,954 - root - DEBUG - Lumerical_dispersion.py - <module> - center z: 0.0
+2023-02-01 17:39:35,032 - root - DEBUG - Lumerical_dispersion.py - <module> - radius: 0.0
+2023-02-01 17:39:35,110 - root - DEBUG - Lumerical_dispersion.py - <module> - solid: 
+2023-02-01 17:39:35,188 - root - DEBUG - Lumerical_dispersion.py - <module> - angle: 0.0
+2023-02-01 17:39:35,267 - root - DEBUG - Lumerical_dispersion.py - <module> - search: near n
+2023-02-01 17:39:35,346 - root - DEBUG - Lumerical_dispersion.py - <module> - projection method: 1.0
+2023-02-01 17:39:35,425 - root - DEBUG - Lumerical_dispersion.py - <module> - shift d-card center: 0.0
+2023-02-01 17:39:35,504 - root - DEBUG - Lumerical_dispersion.py - <module> - x shift: 0.0
+2023-02-01 17:39:35,582 - root - DEBUG - Lumerical_dispersion.py - <module> - y shift: 0.0
+2023-02-01 17:39:35,661 - root - DEBUG - Lumerical_dispersion.py - <module> - z shift: 0.0
+2023-02-01 17:39:35,737 - root - DEBUG - Lumerical_dispersion.py - <module> - use max index: 1.0
+2023-02-01 17:39:35,817 - root - DEBUG - Lumerical_dispersion.py - <module> - use fully vectorial thin lens beam profile: 0.0
+2023-02-01 17:39:35,894 - root - DEBUG - Lumerical_dispersion.py - <module> - beam direction: 3.0
+2023-02-01 17:39:35,974 - root - DEBUG - Lumerical_dispersion.py - <module> - NA: 0.6
+2023-02-01 17:39:36,052 - root - DEBUG - Lumerical_dispersion.py - <module> - fill lens: 1.0
+2023-02-01 17:39:36,129 - root - DEBUG - Lumerical_dispersion.py - <module> - lens diameter: 0.005
+2023-02-01 17:39:36,208 - root - DEBUG - Lumerical_dispersion.py - <module> - beam diameter: 0.001
+2023-02-01 17:39:36,287 - root - DEBUG - Lumerical_dispersion.py - <module> - number of plane waves: 200.0
+2023-02-01 17:39:36,367 - root - DEBUG - Lumerical_dispersion.py - <module> - define gaussian beam by: 1.0
+2023-02-01 17:39:36,445 - root - DEBUG - Lumerical_dispersion.py - <module> - waist radius: 1e-05
+2023-02-01 17:39:36,523 - root - DEBUG - Lumerical_dispersion.py - <module> - distance from waist: 0.0
+2023-02-01 17:39:36,600 - root - DEBUG - Lumerical_dispersion.py - <module> - beam radius: 0.09999999999999999
+2023-02-01 17:39:36,679 - root - DEBUG - Lumerical_dispersion.py - <module> - divergence angle: 2.83063
+2023-02-01 17:39:36,758 - root - DEBUG - Lumerical_dispersion.py - <module> - refractive index: 1.0
+2023-02-01 17:39:36,835 - root - DEBUG - Lumerical_dispersion.py - <module> - theta: 0.0
+2023-02-01 17:39:36,913 - root - DEBUG - Lumerical_dispersion.py - <module> - phi: 0.0
+2023-02-01 17:39:36,991 - root - DEBUG - Lumerical_dispersion.py - <module> - polarization angle: 0.0
+2023-02-01 17:39:37,070 - root - DEBUG - Lumerical_dispersion.py - <module> - sample span: 1e-05
+2023-02-01 17:39:37,149 - root - DEBUG - Lumerical_dispersion.py - <module> - sample resolution: 200.0
+2023-02-01 17:39:37,226 - root - DEBUG - Lumerical_dispersion.py - <module> - track current mode: 0.0
+2023-02-01 17:39:37,303 - root - DEBUG - Lumerical_dispersion.py - <module> - correct backward propagating modes: 1.0
+2023-02-01 17:39:37,382 - root - DEBUG - Lumerical_dispersion.py - <module> - correct backward propagating modes when pml is present: 0.0
+2023-02-01 17:39:37,462 - root - DEBUG - Lumerical_dispersion.py - <module> - maximum tolerated gain: 1e-12
+2023-02-01 17:39:37,540 - root - DEBUG - Lumerical_dispersion.py - <module> - add material gain to maximum tolerated gain: 1.0
+2023-02-01 17:39:37,618 - root - DEBUG - Lumerical_dispersion.py - <module> - override default boundaries: 0.0
+2023-02-01 17:39:37,698 - root - DEBUG - Lumerical_dispersion.py - <module> - x min bc: Metal
+2023-02-01 17:39:37,776 - root - DEBUG - Lumerical_dispersion.py - <module> - x max bc: Metal
+2023-02-01 17:39:37,856 - root - DEBUG - Lumerical_dispersion.py - <module> - y min bc: Metal
+2023-02-01 17:39:37,934 - root - DEBUG - Lumerical_dispersion.py - <module> - y max bc: Metal
+2023-02-01 17:39:38,013 - root - DEBUG - Lumerical_dispersion.py - <module> - z min bc: Metal
+2023-02-01 17:39:38,091 - root - DEBUG - Lumerical_dispersion.py - <module> - z max bc: Metal
+2023-02-01 17:39:38,170 - root - DEBUG - Lumerical_dispersion.py - <module> - calculate group index: 1.0
+2023-02-01 17:39:38,269 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter core,radius: 4.15e-06
+2023-02-01 17:39:38,338 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter ring,inner radius: 9.96e-06
+2023-02-01 17:39:38,415 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter ring,outer radius: 1.4940000000000001e-05
+2023-02-01 17:39:38,494 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter maximum number of modes to store: 6
+2023-02-01 17:39:38,574 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter search: in range
+2023-02-01 17:39:38,652 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter convergence tolerance: 1e-12
+2023-02-01 17:39:38,837 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter clad,index: 1.4533172548587419
+2023-02-01 17:39:38,905 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter core,index: 1.4553172548587419
+2023-02-01 17:39:38,982 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_named_parameter - Setting named parameter ring,index: 1.448317254858742
+2023-02-01 17:39:39,061 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter wavelength: 8e-07
+2023-02-01 17:39:39,140 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter n1: 1.4553172548587419
+2023-02-01 17:39:39,219 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter n2: 1.4513172548587419
+2023-02-01 17:39:39,296 - root - DEBUG - Lumerical_dispersion.py - set_lumerical_analysis_parameter - Setting analysis parameter bent waveguide: 0

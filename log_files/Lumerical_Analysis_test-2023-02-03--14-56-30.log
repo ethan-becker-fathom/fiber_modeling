@@ -1,0 +1,4 @@
+2023-02-03 14:56:36,754 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter maximum number of modes to store: 6
+2023-02-03 14:56:36,831 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter search: in range
+2023-02-03 14:56:36,910 - root - DEBUG - Lumerical_Analysis.py - set_analysis_parameter - Setting analysis parameter convergence tolerance: 1e-12
+2023-02-03 14:56:37,084 - root - DEBUG - Lumerical_Analysis.py - set_named_parameter - Setting named parameter core,radius: 4.15e-06

@@ -37,6 +37,7 @@ class Lumerical_Mode:
 
         self.wavelength_nm = None
         self.bend_radius = None
+        self.bend_radius_mm = None
 
         self.sellmeier_b = np.array([0.6961663, 0.4079426, 0.8974794])
         if sellmeier_b is not None:
@@ -54,11 +55,12 @@ class Lumerical_Mode:
         self.lum = lumapi.MODE(hide=hidden)
 
     def load_model(self, model_path):
-        self.lum.load(model_path)
+        self.lum.load(str(model_path))
 
     def set_bending_radius(self, bending_radius: float = 0):
         logging.debug(f'Setting Bending Radius to {bending_radius}')
         self.bend_radius = bending_radius
+        self.bend_radius_mm = bending_radius * 1e3
         if bending_radius == 0:
             self.set_analysis_parameter('bent waveguide', 0)
         else:
@@ -74,8 +76,8 @@ class Lumerical_Mode:
         if update_refractive_indices:
             wavelength_mu = self.wavelength_nm / 1e3
 
-            n = np.sqrt(((Sellmeier_B * np.square(wavelength_mu)) / (
-                    np.square(wavelength_mu) - np.square(Sellmeier_C))).sum() + 1)
+            n = np.sqrt(((self.sellmeier_b * np.square(wavelength_mu)) / (
+                    np.square(wavelength_mu) - np.square(self.sellmeier_c))).sum() + 1)
 
             self.n = n
             self.named_parameters['clad']['index'] = n
@@ -87,7 +89,7 @@ class Lumerical_Mode:
             self.set_named_parameters()
 
     def get_analysis_parameters(self, log=True):
-        params = lum.getanalysis().split('\n')
+        params = self.lum.getanalysis().split('\n')
         if log:
             for param in params:
                 try:
@@ -99,7 +101,7 @@ class Lumerical_Mode:
 
     def set_analysis_parameter(self, parameter: str, value):
         logging.debug(f'Setting analysis parameter {parameter}: {value}')
-        lum.setanalysis(parameter, value)
+        self.lum.setanalysis(parameter, value)
 
     def set_default_analysis_parameters(self):
         for param, value in self.default_analysis_parameters.items():
@@ -108,7 +110,7 @@ class Lumerical_Mode:
     def set_named_parameter(self, name: str, parameter: str, value):
         self.lum.switchtolayout()
         logging.debug(f'Setting named parameter {name},{parameter}: {value}')
-        lum.setnamed(name, parameter, value)
+        self.lum.setnamed(name, parameter, value)
 
     def set_named_parameters(self):
         for name, params in self.named_parameters.items():
@@ -117,9 +119,9 @@ class Lumerical_Mode:
                     continue
                 self.set_named_parameter(name, param, value)
 
-
     def find_modes(self):
         logging.debug(f'Finding Modes')
+        self.lum.findmodes()
 
     def get_mode_overlaps(self, save_to_file: bool = True, folder: Path = Path(), overlap_max=5e-6, overlap_points=51):
         logging.debug(f'Computing Mode Overlaps')
@@ -137,7 +139,7 @@ class Lumerical_Mode:
         for i in range(1, 7):
             for j in range(1, 7):
                 for k, x in enumerate(d):
-                    overlap = lum.overlap(
+                    overlap = self.lum.overlap(
                         f"::model::FDE::data::mode{i}",
                         f"::model::FDE::data::mode{j}",
                         x,
@@ -148,14 +150,14 @@ class Lumerical_Mode:
                     modes['mode_coupling'].append([i, j, x, overlap])
 
         if save_to_file:
-            file_path = folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-overlaps.json')
+            file_path = folder.joinpath(f'{self.wavelength_nm}nm_bend-{self.bend_radius_mm}mm_mode-overlaps.json')
             with open(file_path, "w") as outfile:
                 json.dump(modes, outfile, cls=NumpyArrayEncoder)
 
         return modes
 
     def get_mode_summary(self, save_to_file: bool = True, folder: Path = Path()):
-        logging.debug(f'Getting Mode Summary')
+        logging.info(f'Getting Mode Summary')
 
         modes = {}
         modes['wavelength'] = self.wavelength_nm
@@ -166,18 +168,18 @@ class Lumerical_Mode:
         for i in range(1, 7):
             try:
                 modes[str(i)] = {}
-                modes[str(i)]['n'] = n
-                modes[str(i)]['loss'] = lum.getresult(f"::model::FDE::data::mode{i}", "loss")
-                modes[str(i)]['neff'] = float(lum.getresult(f"::model::FDE::data::mode{i}", "neff").flatten()[0])
-                modes[str(i)]['mode_effective_area'] = lum.getresult(f"::model::FDE::data::mode{i}",
-                                                                     "mode effective area")
-                modes[str(i)]['TE_polarization_fraction'] = lum.getresult(f"::model::FDE::data::mode{i}",
-                                                                          "TE polarization fraction")
+                modes[str(i)]['n'] = self.n
+                modes[str(i)]['loss'] = self.lum.getresult(f"::model::FDE::data::mode{i}", "loss")
+                modes[str(i)]['neff'] = float(self.lum.getresult(f"::model::FDE::data::mode{i}", "neff").flatten()[0])
+                modes[str(i)]['mode_effective_area'] = self.lum.getresult(f"::model::FDE::data::mode{i}",
+                                                                          "mode effective area")
+                modes[str(i)]['TE_polarization_fraction'] = self.lum.getresult(f"::model::FDE::data::mode{i}",
+                                                                               "TE polarization fraction")
             except:
                 pass
 
         if save_to_file:
-            file_path = results_folder.joinpath(f'{wavelength_nm}nm_bend-{bend_radius_mm}mm_mode-summary.json')
+            file_path = folder.joinpath(f'{self.wavelength_nm}nm_bend-{self.bend_radius}mm_mode-summary.json')
             with open(file_path, "w") as outfile:
                 json.dump(modes, outfile, cls=NumpyArrayEncoder)
 
@@ -214,7 +216,7 @@ if __name__ == '__main__':
     # lum = lumapi.MODE(hide=True)
 
     model_path = Path(
-        "C:\\Users\\fathom-lumerical\\Fathom Radiant Dropbox\\Engineering\\Fiber\\Simulation\\Lumerical\\SIF_Trench 8.3-20-30.lms")
+        "C:\\Users\\fathom-lumerical\\Fathom Radiant Dropbox\\Engineering\\Fiber\\Simulation\\Lumerical\\SIF_Trench 8.3-20-30 _with_tiny_trench.lms")
     lum.load(str(model_path))
 
     for item in lum.getanalysis().split('\n'):
@@ -229,7 +231,8 @@ if __name__ == '__main__':
     deltan_core = 2e-3
     deltan_ring = 5e-3
 
-    results_folder = Path(f'Lumerical_Results/TAF_{d_core * 1e6:.1f}-{CCDR1}-{CCDR2}_{deltan_core}-{deltan_ring}')
+    results_folder = Path(
+        f'Lumerical_Results/TAF_{d_core * 1e6:.1f}-{CCDR1}-{CCDR2}_{deltan_core}-{deltan_ring}_with_tiny_trench')
     results_folder.mkdir(parents=True, exist_ok=True)
 
     core_radius = d_core / 2
@@ -245,11 +248,13 @@ if __name__ == '__main__':
     set_lumerical_analysis_parameter('search', 'in range')
     set_lumerical_analysis_parameter('convergence tolerance', 1e-12)
 
-    bend_radii = [0, .3, .2, .1, .075, .05, .045, .04, .035, .03, .025, .02, .015, .01, .005]
+    # bend_radii = [0, .3, .2, .1, .075, .05, .045, .04, .035, .03, .025, .02, .015, .01, .005]
     # bend_radii = [0]
+    bend_radii = [0, .1, .05, .025, .01]
 
-    wavelengths_nm = [800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980,
-                      990, 1000, 1010, 1020, 1030, 1040, 1050]
+    # wavelengths_nm = [800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980,
+    #                   990, 1000, 1010, 1020, 1030, 1040, 1050]
+    wavelengths_nm = [800, 850, 900, 950, 1000, 1050]
     # wavelengths_nm = [800]
 
     for wavelength_nm in wavelengths_nm:
@@ -272,6 +277,7 @@ if __name__ == '__main__':
         set_lumerical_named_parameter('clad', 'index', n)
         set_lumerical_named_parameter('core', 'index', n + deltan_core)
         set_lumerical_named_parameter('ring', 'index', n - deltan_ring)
+        set_lumerical_named_parameter('small_ring', 'index', n - deltan_ring)
 
         logging.debug(f'Set n to {n}, for wavelength {wavelength_nm}nm')
 
@@ -294,8 +300,8 @@ if __name__ == '__main__':
 
             lum.findmodes()
 
-            if bend_radius == 0:
-                # if False:
+            # if bend_radius == 0:
+            if False:
                 modes = {}
                 modes['wavelength'] = wavelength_nm
                 modes['bend_radius'] = bend_radius
