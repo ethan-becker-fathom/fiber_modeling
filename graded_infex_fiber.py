@@ -86,3 +86,5 @@ if __name__ == "__main__":
     plt.legend()
     
     plt.show()
+    
+    # Fucntion to use tkinter to ask to open a file
