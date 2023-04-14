@@ -1,31 +1,41 @@
-import numpy as np
 import matplotlib.pyplot as plt
-# import json
-# import scipy.io
-from scipy import interpolate, ndimage, datasets, optimize
-# import os
+from scipy import optimize
 import pandas as pd
-# import collections
 from pathlib import Path
-# import tkinter as tk
-# from tkinter import filedialog
 import math
 import random
 import logging
 import time
 import pickle
-# import cv2
 import functools
 
 from numba import jit
 
+try:
+    import cupy as cp
+    import cupyx.scipy.ndimage
+
+    xp = cp
+    xndimage = cupyx.scipy.ndimage
+
+    import numpy as np
+    import scipy.ndimage
+
+    use_cupy = True
+except ModuleNotFoundError:
+    import numpy as np
+    import scipy.ndimage
+
+    xp = cp
+    xndimage = scipy.ndimage
+
+    use_cupy = False
+
+
+
+logger = logging.getLogger(__name__)
 
 # from line_profiler_pycharm import profile
-
-
-@jit(cache=True, nopython=True)
-def polar_to_rect(r, phi):
-    return r * (np.cos(phi) + np.sin(phi) * 1j)
 
 
 def load_mode_data(file_path='TAF Fiber Modes only Farfield.csv'):
@@ -75,16 +85,57 @@ def load_mode_data(file_path='TAF Fiber Modes only Farfield.csv'):
     return farfield1_exact_Ex_power_pivot.values, farfield3_exact_Ex_power_pivot.values, farfield4_exact_Ex_power_pivot.values
 
 
-@jit(cache=True, nopython=True)
-def pad_and_combine(array_1, array_2):
-    # array_1[:array_2.shape[0], :array_2.shape[1]] += array_2
-    for i in range(array_2.shape[0]):
-        for j in range(array_2.shape[1]):
-            array_1[i, j] += array_2[i, j]
-    return array_1
+# @jit(cache=True, nopython=True)
+def polar_to_rect(r, phi):
+    return r * (xp.cos(phi) + xp.sin(phi) * 1j)
 
 
-@jit(cache=True)
+# @jit(cache=True)
+def clipped_zoom(img, zoom_factor, order=1):
+    h, w = img.shape[:2]
+
+    # For multichannel images we don't want to apply the zoom factor to the RGB
+    # dimension, so instead we create a tuple of zoom factors, one per array
+    # dimension, with 1's for any trailing dimensions after the width and height.
+    zoom_tuple = (zoom_factor,) * 2 + (1,) * (img.ndim - 2)
+
+    # Zooming out
+    if zoom_factor < 1:
+
+        # Bounding box of the zoomed-out image within the output array
+        zh = int(np.round(h * zoom_factor))
+        zw = int(np.round(w * zoom_factor))
+        top = (h - zh) // 2
+        left = (w - zw) // 2
+
+        # Zero-padding
+        out = np.zeros_like(img)
+        out[top:top + zh, left:left + zw] = scipy.ndimage.zoom(img, zoom_tuple, order=order)
+
+    # Zooming in
+    elif zoom_factor > 1:
+
+        # Bounding box of the zoomed-in region within the input array
+        zh = int(np.round(h / zoom_factor))
+        zw = int(np.round(w / zoom_factor))
+        top = (h - zh) // 2
+        left = (w - zw) // 2
+
+        out = scipy.ndimage.zoom(img[top:top + zh, left:left + zw], zoom_tuple, order=order)
+
+        # `out` might still be slightly larger than `img` due to rounding, so
+        # trim off any extra pixels at the edges
+        trim_top = ((out.shape[0] - h) // 2)
+        trim_left = ((out.shape[1] - w) // 2)
+        out = out[trim_top:trim_top + h, trim_left:trim_left + w]
+
+    # If zoom_factor == 1, just return the input array
+    else:
+        out = img
+    return out
+
+
+# @jit(cache=True)
 # @profile
 def create_mode_image(mode_1,
                       mode_2,
@@ -103,40 +154,34 @@ def create_mode_image(mode_1,
     mode_1_complex = mode_1 * mode_1_power
 
     mode_2_modulus = mode_2 * mode_2_power
-    mode_2_angle = np.full_like(mode_2_modulus, mode_2_phase)
-    mode_2_complex = polar_to_rect(mode_2_modulus, mode_2_angle)
+    mode_2_complex = polar_to_rect(mode_2_modulus, mode_2_phase)
 
     mode_3_modulus = mode_3 * mode_3_power
-    mode_3_angle = np.full_like(mode_3_modulus, mode_3_phase)
-    mode_3_complex = polar_to_rect(mode_3_modulus, mode_3_angle)
+    mode_3_complex = polar_to_rect(mode_3_modulus, mode_3_phase)
 
     total_complex = mode_1_complex + mode_2_complex + mode_3_complex
-    total_intensity = np.square(np.abs(total_complex))
+    total_intensity = xp.square(xp.abs(total_complex))
 
-    total_rotate = ndimage.rotate(total_intensity, rotate, reshape=False, order=0)
-    total_rotate_zoom = ndimage.zoom(total_rotate, scale, order=0)
-    full_image = np.zeros(final_dimensions)
-    # pad_x = full_image.shape[0] - total_rotate_zoom.shape[0]
-    # pad_y = full_image.shape[1] - total_rotate_zoom.shape[1]
-    # full_image = full_image + np.pad(total_rotate_zoom, ((0, pad_x), (0, pad_y)), 'constant', constant_values=(0, 0))
-    full_image = pad_and_combine(full_image, total_rotate_zoom)
-    # full_image_shift = ndimage.shift(full_image, (shift_x, shift_y), cval=0, order=0)
-    shift_x = int(round(shift_x))
-    shift_y = int(round(shift_y))
+    total_rotate = xndimage.rotate(total_intensity, rotate, reshape=False, order=1)
 
-    full_image_shift = np.roll(full_image, (shift_x, shift_y), axis=(1, 0))
+    total_rotate_zoom = xndimage.zoom(total_rotate, scale, order=1)
+    full_image = xp.zeros(final_dimensions)
+    full_image[:total_rotate_zoom.shape[0], :total_rotate_zoom.shape[1]] = total_rotate_zoom
+
+    full_image_shift = xndimage.shift(full_image, (shift_x, shift_y), mode='constant', cval=0, order=1)
     return full_image_shift
 
 
-@jit(cache=True, nopython=True)
+# @jit(cache=True)
 def image_difference(image_1, image_2):
-    diff = image_1 - image_2
-    diff_sq = np.square(diff)
-    sum = np.sum(diff_sq)
-    return sum
+    # diff = image_1 - image_2
+    # diff_sq = xp.square(diff)
+    # sum = xp.sum(diff_sq)
+
+    return xp.sum(xp.square(image_1 - image_2))
 
 
-@jit(cache=True)
+# @jit(cache=True)
 def create_and_diff(
         args,
         # mode_1_power: float,
@@ -145,7 +190,7 @@ def create_and_diff(
         # mode_3_power: float,
         # mode_3_phase: float,
         # rotate: float,
-        scale: float,
+        # scale: float,
         shift_x: float,
         shift_y: float,
         mode_1,
@@ -154,7 +199,8 @@ def create_and_diff(
         compare_image,
         final_dimensions=(4112, 3008),
 ):
-    mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate = args
+    mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate, scale = args
+    # logger.debug(args)
     # print(args)
     # print(mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate, scale, shift_x, shift_y)
 
@@ -174,7 +220,10 @@ def create_and_diff(
                               )
 
     d = image_difference(image, compare_image)
-    return d
+    if use_cupy:
+        return d.get()
+    else:
+        return d
 
 
 # @profile
@@ -207,6 +256,15 @@ def main():
             pickle.dump(data, f)
             print('pickle saved')
 
+    global use_cupy
+    print(use_cupy)
+
+    if use_cupy:
+        mode_1 = cp.array(mode_1)
+        mode_2 = cp.array(mode_2)
+        mode_3 = cp.array(mode_3)
+        pass
+
     param_bounds = {
         'mode_1_power': (0, 1),
         'mode_2_power': (0, 1),
@@ -214,11 +272,12 @@ def main():
         'mode_3_power': (0, 1),
         'mode_3_phase': (0, 2 * math.pi),
         'rotate': (0, 90),
-        # 'scale': (0, 1),
+        'scale': (0, 2),
         # 'shift_x': (0, 1000),
         # 'shift_y': (0, 1000)
     }
 
+    final_dimensions = (1000, 1000)
 
     results = []
 
@@ -238,34 +297,33 @@ def main():
             mode_3_power=random_dict['mode_3_power'],
             mode_3_phase=random_dict['mode_3_phase'],
             rotate=random_dict['rotate'],
-            scale=1,
+            scale=random_dict['scale'],
             shift_x=0,
             shift_y=0,
-            final_dimensions=(500, 500)
+            final_dimensions=final_dimensions
         )
         print(random_dict)
 
-
         partial_create_and_diff = functools.partial(
             create_and_diff,
-            scale=1,
+            # scale=1,
             shift_x=0,
             shift_y=0,
             mode_1=mode_1,
             mode_2=mode_2,
             mode_3=mode_3,
             compare_image=image,
-            final_dimensions=(500, 500)
+            final_dimensions=final_dimensions
         )
 
         t = time.time()
-        res_1 = optimize.brute(
+        res_1 = optimize.direct(
             partial_create_and_diff,
             # x0=np.array([random.random(), random.random(), random.random(), random.random(), random.random()]),
-            # bounds=tuple(param_bounds.values()),
-            ranges = tuple(param_bounds.values()),
-            # locally_biased=False,
-            # maxfun=100000,
+            bounds=tuple(param_bounds.values()),
+            # ranges = tuple(param_bounds.values()),
+            locally_biased=False,
+            maxfun=100000,
             # vol_tol=1e-30,
             # f_min=0,
             # f_min_rtol=1e-10
@@ -279,8 +337,8 @@ def main():
             partial_create_and_diff,
             x0=res_1.x,
             bounds=tuple(param_bounds.values()),
-            # method='Nelder-Mead',
-            method='Powell',
+            method='Nelder-Mead',
+            # method='Powell',
             tol=1e-10,
             options={'maxiter': 10000}
         )
@@ -291,8 +349,7 @@ def main():
 
         results.append([random_dict, res_1, res_2, t, t2, t3])
 
-
-    with open('results_Brute_&_Powell.pickle', 'wb') as f:
+    with open('results_direct_&_NA_cupy.pickle', 'wb') as f:
         pickle.dump(results, f)
         print('pickle saved')
 
@@ -305,13 +362,18 @@ def main():
                                 mode_3_power=res_2.x[3],
                                 mode_3_phase=res_2.x[4],
                                 rotate=res_2.x[5],
-                                scale=1,
+                                scale=res_2.x[6],
                                 shift_x=0,
                                 shift_y=0,
-                                final_dimensions=(500, 500))
+                                final_dimensions=final_dimensions)
 
     d = image_difference(image, image_2)
-    print(d, np.max(image - image_2))
+    print(d, xp.max(image - image_2))
+
+    if use_cupy:
+        image = image.get()
+        image_2 = image_2.get()
+
 
     f, ax = plt.subplots(2, 2)
     ax[0, 0].imshow(image)
@@ -319,8 +381,7 @@ def main():
     ax[1, 0].imshow(image - image_2)
     ax[1, 1].imshow(z)
 
-    # plt.show()
-
+    plt.show()
 
 if __name__ == '__main__':
     main()
