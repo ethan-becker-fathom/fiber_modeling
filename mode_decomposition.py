@@ -10,6 +10,7 @@ import pickle
 import functools
 
 from numba import jit
+from line_profiler_pycharm import profile
 
 try:
     import cupy as cp
@@ -26,16 +27,12 @@ except ModuleNotFoundError:
     import numpy as np
     import scipy.ndimage
 
-    xp = cp
+    xp = np
     xndimage = scipy.ndimage
 
     use_cupy = False
 
-
-
 logger = logging.getLogger(__name__)
-
-# from line_profiler_pycharm import profile
 
 
 def load_mode_data(file_path='TAF Fiber Modes only Farfield.csv'):
@@ -136,7 +133,7 @@ def clipped_zoom(img, zoom_factor, order=1):
 
 
 # @jit(cache=True)
-# @profile
+@profile
 def create_mode_image(mode_1,
                       mode_2,
                       mode_3,
@@ -149,7 +146,8 @@ def create_mode_image(mode_1,
                       scale: float,
                       shift_x: float,
                       shift_y: float,
-                      final_dimensions=(4112, 3008)
+                      final_dimensions=(4112, 3008),
+                      spline_order=1
                       ):
     mode_1_complex = mode_1 * mode_1_power
 
@@ -162,13 +160,13 @@ def create_mode_image(mode_1,
     total_complex = mode_1_complex + mode_2_complex + mode_3_complex
     total_intensity = xp.square(xp.abs(total_complex))
 
-    total_rotate = xndimage.rotate(total_intensity, rotate, reshape=False, order=1)
+    total_rotate = xndimage.rotate(total_intensity, rotate, reshape=False, order=spline_order)
 
-    total_rotate_zoom = xndimage.zoom(total_rotate, scale, order=1)
+    total_rotate_zoom = xndimage.zoom(total_rotate, scale, order=spline_order)
     full_image = xp.zeros(final_dimensions)
     full_image[:total_rotate_zoom.shape[0], :total_rotate_zoom.shape[1]] = total_rotate_zoom
 
-    full_image_shift = xndimage.shift(full_image, (shift_x, shift_y), mode='constant', cval=0, order=1)
+    full_image_shift = xndimage.shift(full_image, (shift_x, shift_y), mode='constant', cval=0, order=spline_order)
     return full_image_shift
 
 
@@ -191,15 +189,15 @@ def create_and_diff(
         # mode_3_phase: float,
         # rotate: float,
         # scale: float,
-        shift_x: float,
-        shift_y: float,
+        # shift_x: float,
+        # shift_y: float,
         mode_1,
         mode_2,
         mode_3,
         compare_image,
         final_dimensions=(4112, 3008),
 ):
-    mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate, scale = args
+    mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate, scale, shift_x, shift_y = args
     # logger.debug(args)
     # print(args)
     # print(mode_1_power, mode_2_power, mode_2_phase, mode_3_power, mode_3_phase, rotate, scale, shift_x, shift_y)
@@ -241,24 +239,23 @@ def main():
     logging.getLogger('PIL').setLevel(logging.WARNING)
 
     z = np.zeros((100, 100))
-    # pad_and_combine(z, z)
-    # polar_to_rect(z, z)
+
+
+    file_path = Path('farfield_mode_data_1050nm.pickle')
 
     try:
-        with open('data.pickle', 'rb') as f:
+        with open(file_path, 'rb') as f:
             data = pickle.load(f)
             mode_1, mode_2, mode_3 = data
             print('pickle loaded')
     except:
         mode_1, mode_2, mode_3 = load_mode_data()
-        with open('data.pickle', 'wb') as f:
+        with open(file_path, 'wb') as f:
             data = mode_1, mode_2, mode_3
             pickle.dump(data, f)
             print('pickle saved')
 
     global use_cupy
-    print(use_cupy)
-
     if use_cupy:
         mode_1 = cp.array(mode_1)
         mode_2 = cp.array(mode_2)
@@ -272,16 +269,16 @@ def main():
         'mode_3_power': (0, 1),
         'mode_3_phase': (0, 2 * math.pi),
         'rotate': (0, 90),
-        'scale': (0, 2),
-        # 'shift_x': (0, 1000),
-        # 'shift_y': (0, 1000)
+        'scale': (0.5, 2),
+        'shift_x': (0, 250),
+        'shift_y': (0, 250)
     }
 
     final_dimensions = (1000, 1000)
 
     results = []
 
-    for i in range(10):
+    for i in range(1):
 
         random_dict = {}
         for param, bound in param_bounds.items():
@@ -298,8 +295,8 @@ def main():
             mode_3_phase=random_dict['mode_3_phase'],
             rotate=random_dict['rotate'],
             scale=random_dict['scale'],
-            shift_x=0,
-            shift_y=0,
+            shift_x=random_dict['shift_x'],
+            shift_y=random_dict['shift_y'],
             final_dimensions=final_dimensions
         )
         print(random_dict)
@@ -307,8 +304,8 @@ def main():
         partial_create_and_diff = functools.partial(
             create_and_diff,
             # scale=1,
-            shift_x=0,
-            shift_y=0,
+            # shift_x=0,
+            # shift_y=0,
             mode_1=mode_1,
             mode_2=mode_2,
             mode_3=mode_3,
@@ -363,8 +360,8 @@ def main():
                                 mode_3_phase=res_2.x[4],
                                 rotate=res_2.x[5],
                                 scale=res_2.x[6],
-                                shift_x=0,
-                                shift_y=0,
+                                shift_x=res_2.x[7],
+                                shift_y=res_2.x[8],
                                 final_dimensions=final_dimensions)
 
     d = image_difference(image, image_2)
@@ -374,7 +371,6 @@ def main():
         image = image.get()
         image_2 = image_2.get()
 
-
     f, ax = plt.subplots(2, 2)
     ax[0, 0].imshow(image)
     ax[0, 1].imshow(image_2)
@@ -382,6 +378,7 @@ def main():
     ax[1, 1].imshow(z)
 
     plt.show()
+
 
 if __name__ == '__main__':
     main()
